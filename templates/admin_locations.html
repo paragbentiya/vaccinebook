@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>Locations</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  </head>
+  <body>
+    <header>
+      <h1>Covid Vaccination App</h1>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/login">User login</a></li>
+        <li><a href="/adminlogin">Admin login</a></li>
+        <li><a href="/register">Sign up</a></li>
+        <li><a href="/search">Search</a></li>
+      </ul>
+    </nav>
+    <main>
+      <h2>Manage Vaccination Centers</h2>
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+      <h3>Add a center</h3>
+      <form method="post" action="/admin/locations">
+        <input type="hidden" name="action" value="add">
+        <label for="center">Vaccination center:</label>
+        <input type="text" id="center" name="center" required>
+        <input type="submit" value="Add center">
+      </form>
+      <h3>Remove a center</h3>
+      <form method="post" action="/admin/locations">
+        <input type="hidden" name="action" value="remove">
+        <label for="center">Vaccination center:</label>
+        <select id="center" name="center">
+          {% for center in centers %}
+          <option value="{{ center }}">{{ center }}</option>
+          {% endfor %}
+        </select>
+        <input type="submit" value="Remove center">
+      </form>
+    </main>
+  </body>
+</html>
